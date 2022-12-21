@@ -1,0 +1,30 @@
+﻿<Window x:Class="BrainWaves.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BrainWaves"
+        xmlns:vm="clr-namespace:BrainWaves.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="400">
+    <Window.DataContext>
+        <vm:MainViewModel/>
+    </Window.DataContext>
+    
+    <DockPanel>
+        <Frame Source="{Binding ShowingPageName}" NavigationUIVisibility="Hidden" DockPanel.Dock="Top"/>
+        <Grid DockPanel.Dock="Bottom" VerticalAlignment="Bottom" MinHeight="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding NavigateFrame}" CommandParameter="pack://application:,,,/View/Waves.xaml"
+                    Grid.Column="0" Content="waves"/>
+            <Button Command="{Binding NavigateFrame}" CommandParameter="pack://application:,,,/View/Presets.xaml"
+                    Grid.Column="1" Content="presets"/>
+            <Button Command="{Binding NavigateFrame}" CommandParameter="pack://application:,,,/View/Settings.xaml"
+                    Grid.Column="2" Content="Settings"/>
+        </Grid>
+    </DockPanel>
+</Window>
