@@ -1,29 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Media;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BrainWaves
 {
     internal class PlaySound
     {
-        public PlaySound()
+        private double _leftFrequency = 75.0;
+        private double _rightFrequency = 73.0;
+        private double _leftGain = 0.5;
+        private double _rightGain = 0.5;
+        private int _duration = 5000; // 5 seconds by default
+
+        public void SetFrequencies(double left, double right)
         {
-            // Set the desired frequency in Hz
-            int frequencyLeft = 75;
-            int frequencyRight = 73;
+            _leftFrequency = left;
+            _rightFrequency = right;
+        }
 
-            // Set the duration of the sound in milliseconds
-            int duration = 100;
+        public void SetGains(double left, double right)
+        {
+            _leftGain = Math.Max(0, Math.Min(1, left));
+            _rightGain = Math.Max(0, Math.Min(1, right));
+        }
 
-            // Set the volume of the sound (range 0-100)
-            int volume = 5;
+        public void SetDuration(int milliseconds)
+        {
+            _duration = milliseconds;
+        }
 
+        public SoundPlayer Play()
+        {
             // Generate the sample data
-            byte[] sampleData = GenerateSineWave(frequencyLeft, frequencyRight, duration, volume);
+            byte[] sampleData = GenerateSineWave(_leftFrequency, _rightFrequency, _duration, _leftGain, _rightGain);
 
             // Create the wave file header
             byte[] header = CreateWaveFileHeader(sampleData.Length);
@@ -39,37 +49,39 @@ namespace BrainWaves
             // Set the data for the SoundPlayer to play
             player.Stream = new MemoryStream(data);
 
-            // Play the sound
-            player.PlaySync();
+            // Play the sound asynchronously and loop
+            player.PlayLooping();
+
+            return player;
         }
 
-        static byte[] GenerateSineWave(int frequencyLeft, int frequencyRight, int duration, int volume)
+        static byte[] GenerateSineWave(double frequencyLeft, double frequencyRight, int duration, double gainLeft, double gainRight)
         {
+            const int sampleRate = 44100;
+            
             // Calculate the number of samples needed
-            int sampleCount = (44100 * duration) / 1000;
+            int sampleCount = (sampleRate * duration) / 1000;
 
             // Create a new array to store the samples
-            byte[] data = new byte[sampleCount * 4];
+            byte[] data = new byte[sampleCount * 4]; // 2 channels * 2 bytes per sample
 
-            // Set the volume of the sound
-            double amplitude = (short.MaxValue * volume) / 100;
-
-            // Set the period of the waves (2 * PI / frequency)
-            double periodLeft = (2 * Math.PI) / 44100;
-            double periodRight = (2 * Math.PI) / 44100;
+            // Set the maximum amplitude based on gain
+            double amplitudeLeft = short.MaxValue * gainLeft * 0.8; // 0.8 to avoid clipping
+            double amplitudeRight = short.MaxValue * gainRight * 0.8;
 
             // Generate the samples
             for (int i = 0; i < sampleCount; i++)
             {
                 // Calculate the sample values (sine waves)
-                double sampleLeft = Math.Sin(frequencyLeft * periodLeft * i);
-                double sampleRight = Math.Sin(frequencyRight * periodRight * i);
+                double timeInSeconds = (double)i / sampleRate;
+                double sampleLeft = Math.Sin(2.0 * Math.PI * frequencyLeft * timeInSeconds);
+                double sampleRight = Math.Sin(2.0 * Math.PI * frequencyRight * timeInSeconds);
 
                 // Scale the sample values to the desired amplitude
-                short valueLeft = (short)(amplitude * sampleLeft);
-                short valueRight = (short)(amplitude * sampleRight);
+                short valueLeft = (short)(amplitudeLeft * sampleLeft);
+                short valueRight = (short)(amplitudeRight * sampleRight);
 
-                // Convert the sample values to bytes and store in the array
+                // Convert the sample values to bytes and store in the array (little-endian)
                 data[i * 4] = (byte)(valueLeft & 0xff);
                 data[i * 4 + 1] = (byte)((valueLeft >> 8) & 0xff);
                 data[i * 4 + 2] = (byte)(valueRight & 0xff);
@@ -82,8 +94,8 @@ namespace BrainWaves
         static byte[] CreateWaveFileHeader(int dataSize)
         {
             // Set the wave file format (PCM, 16-bit, stereo)
-            ushort formatTag = 1;
-            ushort channels = 2;
+            ushort formatTag = 1; // PCM
+            ushort channels = 2; // Stereo
             uint samplesPerSecond = 44100;
             ushort bitsPerSample = 16;
             ushort blockAlign = (ushort)(channels * (bitsPerSample / 8));
