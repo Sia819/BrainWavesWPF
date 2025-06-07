@@ -4,18 +4,217 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BrainWaves.View"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="400" d:Background="White"
+      d:DesignHeight="650" d:DesignWidth="400"
       Title="Settings">
 
-    <StackPanel>
-        <TextBlock Text="Settings"/>
-
-        <GroupBox Header="Used Opensource" Margin="0 10" >
-            <StackPanel>
-                <TextBlock Text="- CommunityToolkit.Mvvm"/>
-                <TextBlock Text="- PropertyChanged.Fody"/>
-            </StackPanel>
-        </GroupBox>
-    </StackPanel>
+    <Grid Background="#0E0E1A">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            
+                <!-- Header Section -->
+                <Grid Grid.Row="0" Height="120">
+                    <Grid.Background>
+                        <SolidColorBrush Color="#0E0E1A"/>
+                    </Grid.Background>
+                    
+                    <StackPanel VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Settings" 
+                                                 Width="48" 
+                                                 Height="48"
+                                                 Foreground="#6C63FF"
+                                                 HorizontalAlignment="Center"/>
+                        <TextBlock Text="Settings" 
+                                   Style="{StaticResource MaterialDesignHeadline5TextBlock}"
+                                   Foreground="White"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,8,0,0"/>
+                    </StackPanel>
+                </Grid>
+            
+                <!-- Content Section -->
+                <StackPanel Grid.Row="1" Margin="12,8">
+                    <!-- About Section -->
+                    <Border Margin="8,0,8,12"
+                            CornerRadius="20"
+                            Background="#1A1A2E">
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0"
+                                       Text="ABOUT" 
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                       FontWeight="Medium"
+                                       Foreground="#6C63FF"
+                                       Margin="0,0,0,16"/>
+                            
+                            <StackPanel Grid.Row="1" Margin="0,0,0,12">
+                                <TextBlock Text="BrainWaves" 
+                                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                                           Foreground="White"
+                                           Margin="0,0,0,4"/>
+                                <TextBlock Text="Version 1.0.0" 
+                                           Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                           Foreground="#B0B0B0"/>
+                            </StackPanel>
+                            
+                            <TextBlock Grid.Row="2"
+                                       Text="A modern binaural beat generator designed to help you focus, relax, and enhance your mental state through scientifically-backed audio frequencies."
+                                       Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                       Foreground="#E0E0E0"
+                                       TextWrapping="Wrap"
+                                       LineHeight="20"/>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Open Source Libraries Section -->
+                    <Border Margin="8,0,8,12"
+                            CornerRadius="20"
+                            Background="#1A1A2E">
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0"
+                                       Text="OPEN SOURCE LIBRARIES" 
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                       FontWeight="Medium"
+                                       Foreground="#6C63FF"
+                                       Margin="0,0,0,16"/>
+                            
+                            <StackPanel Grid.Row="1">
+                                <!-- CommunityToolkit.Mvvm -->
+                                <Border Background="#252539"
+                                        CornerRadius="12"
+                                        Padding="16"
+                                        Margin="0,0,0,12">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <materialDesign:PackIcon Grid.Column="0"
+                                                                 Kind="CodeBraces"
+                                                                 Width="24"
+                                                                 Height="24"
+                                                                 Foreground="#6C63FF"
+                                                                 VerticalAlignment="Center"
+                                                                 Margin="0,0,12,0"/>
+                                        
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="CommunityToolkit.Mvvm" 
+                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                       Foreground="White"
+                                                       FontWeight="Medium"/>
+                                            <TextBlock Text="Modern MVVM framework" 
+                                                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                       Foreground="#B0B0B0"
+                                                       Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                                
+                                <!-- MaterialDesignThemes -->
+                                <Border Background="#252539"
+                                        CornerRadius="12"
+                                        Padding="16">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <materialDesign:PackIcon Grid.Column="0"
+                                                                 Kind="Palette"
+                                                                 Width="24"
+                                                                 Height="24"
+                                                                 Foreground="#6C63FF"
+                                                                 VerticalAlignment="Center"
+                                                                 Margin="0,0,12,0"/>
+                                        
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="MaterialDesignThemes" 
+                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                       Foreground="White"
+                                                       FontWeight="Medium"/>
+                                            <TextBlock Text="Material Design for WPF" 
+                                                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                       Foreground="#B0B0B0"
+                                                       Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    
+                    <!-- Developer Section -->
+                    <Border Margin="8,0,8,12"
+                            CornerRadius="20"
+                            Background="#1A1A2E">
+                        <Grid Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <TextBlock Grid.Row="0"
+                                       Text="DEVELOPER" 
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                       FontWeight="Medium"
+                                       Foreground="#6C63FF"
+                                       Margin="0,0,0,16"/>
+                            
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <materialDesign:PackIcon Grid.Column="0"
+                                                         Kind="Github"
+                                                         Width="24"
+                                                         Height="24"
+                                                         Foreground="#6C63FF"
+                                                         VerticalAlignment="Center"
+                                                         Margin="0,0,12,0"/>
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="GitHub Repository" 
+                                               Style="{StaticResource MaterialDesignBody1TextBlock}"
+                                               Foreground="White"/>
+                                    <TextBlock Text="View source code" 
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               Foreground="#B0B0B0"
+                                               Margin="0,2,0,0"/>
+                                </StackPanel>
+                                
+                                <materialDesign:PackIcon Grid.Column="2"
+                                                         Kind="ChevronRight"
+                                                         Width="20"
+                                                         Height="20"
+                                                         Foreground="#6C63FF"
+                                                         VerticalAlignment="Center"/>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </Page>
