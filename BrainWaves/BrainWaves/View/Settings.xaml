@@ -99,64 +99,66 @@
                                 <!-- CommunityToolkit.Mvvm -->
                                 <Border Background="#252539"
                                         CornerRadius="12"
-                                        Padding="16"
                                         Margin="0,0,0,12">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <materialDesign:PackIcon Grid.Column="0"
-                                                                 Kind="CodeBraces"
-                                                                 Width="24"
-                                                                 Height="24"
-                                                                 Foreground="#6C63FF"
-                                                                 VerticalAlignment="Center"
-                                                                 Margin="0,0,12,0"/>
-                                        
-                                        <StackPanel Grid.Column="1">
-                                            <TextBlock Text="CommunityToolkit.Mvvm" 
-                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                       Foreground="White"
-                                                       FontWeight="Medium"/>
-                                            <TextBlock Text="Modern MVVM framework" 
-                                                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                                       Foreground="#B0B0B0"
-                                                       Margin="0,2,0,0"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <Button Style="{StaticResource SettingsListItemButton}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <materialDesign:PackIcon Grid.Column="0"
+                                                                     Kind="CodeBraces"
+                                                                     Width="24"
+                                                                     Height="24"
+                                                                     Foreground="#6C63FF"
+                                                                     VerticalAlignment="Center"
+                                                                     Margin="0,0,12,0"/>
+                                            
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="CommunityToolkit.Mvvm" 
+                                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                           Foreground="White"
+                                                           FontWeight="Medium"/>
+                                                <TextBlock Text="Modern MVVM framework" 
+                                                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                           Foreground="#B0B0B0"
+                                                           Margin="0,2,0,0"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
                                 </Border>
                                 
                                 <!-- MaterialDesignThemes -->
                                 <Border Background="#252539"
-                                        CornerRadius="12"
-                                        Padding="16">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-                                        
-                                        <materialDesign:PackIcon Grid.Column="0"
-                                                                 Kind="Palette"
-                                                                 Width="24"
-                                                                 Height="24"
-                                                                 Foreground="#6C63FF"
-                                                                 VerticalAlignment="Center"
-                                                                 Margin="0,0,12,0"/>
-                                        
-                                        <StackPanel Grid.Column="1">
-                                            <TextBlock Text="MaterialDesignThemes" 
-                                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
-                                                       Foreground="White"
-                                                       FontWeight="Medium"/>
-                                            <TextBlock Text="Material Design for WPF" 
-                                                       Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                                       Foreground="#B0B0B0"
-                                                       Margin="0,2,0,0"/>
-                                        </StackPanel>
-                                    </Grid>
+                                        CornerRadius="12">
+                                    <Button Style="{StaticResource SettingsListItemButton}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <materialDesign:PackIcon Grid.Column="0"
+                                                                     Kind="Palette"
+                                                                     Width="24"
+                                                                     Height="24"
+                                                                     Foreground="#6C63FF"
+                                                                     VerticalAlignment="Center"
+                                                                     Margin="0,0,12,0"/>
+                                            
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock Text="MaterialDesignThemes" 
+                                                           Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                                           Foreground="White"
+                                                           FontWeight="Medium"/>
+                                                <TextBlock Text="Material Design for WPF" 
+                                                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                                           Foreground="#B0B0B0"
+                                                           Margin="0,2,0,0"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Button>
                                 </Border>
                             </StackPanel>
                         </Grid>
@@ -180,75 +182,11 @@
                                        Margin="0,0,0,16"/>
                             
                             <!-- GitHub Repository -->
-                            <!--
-                            중요: Button 레이아웃 이슈 해결 과정
-                            
-                            문제 상황:
-                            - Button 내부의 Grid 콘텐츠가 높이 0으로 렌더링되어 텍스트가 잘리거나 보이지 않음
-                            - OPEN SOURCE LIBRARIES 섹션의 Border들과 동일한 스타일을 원했으나 Button 사용 시 문제 발생
-                            
-                            시도했던 방법들과 실패 이유:
-                            1. 단순 ContentPresenter만 사용한 ControlTemplate
-                               - 실패 이유: ContentPresenter가 자식 크기를 측정하지만 부모에게 보고하지 못함
-                               - Padding, Margin 정보가 레이아웃 체인에서 손실됨
-                            
-                            2. Style="{StaticResource MaterialDesignFlatButton}" 사용
-                               - 실패 이유: Material Design의 일부 버튼 스타일이 특정 상황에서 콘텐츠 크기를 0으로 만드는 버그
-                               - 복잡한 Visual Tree 구조로 인한 Grid 크기 계산 실패
-                            
-                            3. Button.Template에 Border만 추가
-                               - 실패 이유: TemplateBinding 없이는 Button의 속성이 전달되지 않음
-                            
-                            최종 해결책:
-                            - materialDesign:Ripple을 사용한 커스텀 ControlTemplate
-                            - TemplateBinding으로 모든 레이아웃 속성 명시적 전달
-                            - Ripple은 ContentControl 기반으로 콘텐츠 크기를 올바르게 측정
-                            
-                            핵심 포인트:
-                            1. WPF 레이아웃 시스템은 Measure/Arrange 두 단계를 거침
-                            2. 각 단계에서 크기 정보가 올바르게 전달되어야 함
-                            3. TemplateBinding은 이 정보 전달을 보장
-                            4. Material Design의 Ripple 효과도 자동으로 포함됨
-                            
-                            레이아웃 체인:
-                            Border (Padding=0) → Button (Padding=16) → Ripple (Padding 상속) → Grid (최종 콘텐츠)
-                            -->
                             <Border Grid.Row="1"
                                     Background="#252539"
-                                    CornerRadius="12"
-                                    Padding="0">
-                                <Button Background="Transparent"
-                                        BorderThickness="0"
-                                        Padding="16"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Stretch"
-                                        HorizontalContentAlignment="Stretch"
-                                        VerticalContentAlignment="Stretch"
-                                        Click="GitHub_Click"
-                                        Cursor="Hand"
-                                        materialDesign:RippleAssist.IsDisabled="False"
-                                        materialDesign:RippleAssist.Feedback="#6C63FF">
-                                    <Button.Style>
-                                        <Style TargetType="Button">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="Button">
-                                                        <!-- 
-                                                        중요: materialDesign:Ripple 사용 이유
-                                                        1. ContentControl 기반으로 콘텐츠 크기를 올바르게 측정
-                                                        2. TemplateBinding으로 Button의 모든 레이아웃 속성 상속
-                                                        3. Material Design의 클릭 시 물결 효과 자동 포함
-                                                        -->
-                                                        <materialDesign:Ripple Content="{TemplateBinding Content}"
-                                                                               ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                                               Padding="{TemplateBinding Padding}"
-                                                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Button.Style>
+                                    CornerRadius="12">
+                                <Button Style="{StaticResource SettingsListItemButton}"
+                                        Click="GitHub_Click">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto"/>
