@@ -32,7 +32,7 @@ namespace BrainWaves.ViewModel
         private string playButtonText = "Play";
 
         [ObservableProperty]
-        private string playButtonIcon = "▶";
+        private string playButtonIcon = "Play";
 
         public double Resonance => Math.Abs(LeftFrequency - RightFrequency);
 
@@ -125,7 +125,7 @@ namespace BrainWaves.ViewModel
                 _soundPlayer = playSound.Play();
                 _isPlaying = true;
                 PlayButtonText = "Stop";
-                PlayButtonIcon = "■";
+                PlayButtonIcon = "Stop";
             }
             catch (Exception ex)
             {
@@ -140,7 +140,7 @@ namespace BrainWaves.ViewModel
             _soundPlayer = null;
             _isPlaying = false;
             PlayButtonText = "Play";
-            PlayButtonIcon = "▶";
+            PlayButtonIcon = "Play";
         }
 
         [RelayCommand]

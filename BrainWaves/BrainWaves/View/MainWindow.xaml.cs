@@ -25,5 +25,10 @@ namespace BrainWaves.View
             InitializeComponent();
             //PlaySound play = new PlaySound();
         }
+
+        private void ExitApp_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }
