@@ -3,12 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:BrainWaves"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:converters="clr-namespace:BrainWaves.Converters"
              StartupUri="pack://application:,,,/View/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- Material Design -->
-                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Teal" />
+                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="DeepPurple" SecondaryColor="Amber" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
                 
                 <!-- Material Design 폰트 -->
@@ -16,6 +17,10 @@
                     <FontFamily x:Key="MaterialDesignFont">pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto</FontFamily>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
+            
+            <!-- 컨버터 -->
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+            <converters:BoolToPlayStopTextConverter x:Key="BoolToPlayStopTextConverter"/>
             
             <!-- 커스텀 스타일 -->
             <Style x:Key="MaterialCard" TargetType="materialDesign:Card">
@@ -52,6 +57,11 @@
                 <Setter Property="FontWeight" Value="Medium"/>
             </Style>
             
+            <Style x:Key="MaterialDesignDiscreteSlider" TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
+                <Setter Property="IsSnapToTickEnabled" Value="True"/>
+                <Setter Property="TickPlacement" Value="None"/>
+            </Style>
+            
             <!-- 애니메이션 스토리보드 -->
             <Storyboard x:Key="PulseAnimation">
                 <DoubleAnimation Storyboard.TargetProperty="Opacity"
@@ -63,6 +73,21 @@
                 <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.3"/>
                 <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" 
                                 From="20" To="0" Duration="0:0:0.3">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            
+            <Storyboard x:Key="CardHoverAnimation">
+                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                From="1.0" To="1.05" Duration="0:0:0.2">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase EasingMode="EaseOut"/>
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                From="1.0" To="1.05" Duration="0:0:0.2">
                     <DoubleAnimation.EasingFunction>
                         <CubicEase EasingMode="EaseOut"/>
                     </DoubleAnimation.EasingFunction>

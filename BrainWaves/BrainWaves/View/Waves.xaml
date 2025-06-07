@@ -25,41 +25,125 @@
     
     <ScrollViewer VerticalScrollBarVisibility="Auto"
                   HorizontalScrollBarVisibility="Disabled">
-        <Grid Margin="16">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
         
-            <!-- 헤더 섹션 -->
-            <materialDesign:Card Grid.Row="0" 
-                                 Padding="24"
-                                 Margin="0,0,0,16"
-                                 materialDesign:ElevationAssist.Elevation="Dp2">
-                <StackPanel>
-                    <TextBlock Text="{Binding Resonance, StringFormat='{}{0:F2} Hz'}" 
-                               Style="{StaticResource FrequencyText}"
-                               HorizontalAlignment="Center"/>
-                    
-                    <StackPanel Orientation="Horizontal" 
-                                HorizontalAlignment="Center"
-                                Margin="0,8,0,0">
-                        <materialDesign:Chip Content="{Binding WaveType}"
-                                             Background="{DynamicResource PrimaryHueMidBrush}"
-                                             Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                                             Margin="0,0,8,0"/>
-                        <materialDesign:Chip Content="{Binding WaveDescription}"
-                                             Background="{DynamicResource SecondaryHueMidBrush}"
-                                             Foreground="{DynamicResource SecondaryHueMidForegroundBrush}"/>
+            <!-- 헤더 섹션 - 그라데이션 배경 -->
+            <Grid Grid.Row="0" Height="200">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#1A237E" Offset="0"/>
+                        <GradientStop Color="#283593" Offset="0.5"/>
+                        <GradientStop Color="#3949AB" Offset="1"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                
+                <!-- 웨이브 패턴 오버레이 -->
+                <Path Stretch="Fill" 
+                      Fill="#1AFFFFFF"
+                      VerticalAlignment="Bottom"
+                      Height="80">
+                    <Path.Data>
+                        <PathGeometry>
+                            <PathFigure StartPoint="0,40">
+                                <BezierSegment Point1="100,0" Point2="200,80" Point3="300,40"/>
+                                <BezierSegment Point1="400,0" Point2="500,80" Point3="600,40"/>
+                                <LineSegment Point="600,80"/>
+                                <LineSegment Point="0,80"/>
+                            </PathFigure>
+                        </PathGeometry>
+                    </Path.Data>
+                </Path>
+                
+                <StackPanel VerticalAlignment="Center"
+                            HorizontalAlignment="Center">
+                    <!-- 메인 주파수 표시 -->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Resonance, StringFormat='{}{0:F2}'}"
+                                   Foreground="White"
+                                   FontWeight="Light"
+                                   FontSize="72"
+                                   VerticalAlignment="Bottom">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                            <DataTrigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                         From="0.7" To="1" Duration="0:0:1"
+                                                                         RepeatBehavior="Forever"
+                                                                         AutoReverse="True"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </DataTrigger.EnterActions>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock Text="Hz" 
+                                   FontSize="36"
+                                   Foreground="White"
+                                   FontWeight="Light"
+                                   VerticalAlignment="Bottom"
+                                   Margin="8,0,0,12"/>
                     </StackPanel>
+                    
+                    <!-- 웨이브 타입 및 설명 -->
+                    <Grid HorizontalAlignment="Center"
+                          Margin="0,16,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="16"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        
+                        <Border Grid.Column="0"
+                                Background="#33FFFFFF"
+                                CornerRadius="16"
+                                Padding="16,8">
+                            <TextBlock Text="{Binding WaveType}"
+                                       Foreground="White"
+                                       FontWeight="Medium"
+                                       FontSize="14"/>
+                        </Border>
+                        
+                        <materialDesign:PackIcon Grid.Column="1"
+                                                 Kind="CircleSmall"
+                                                 Width="8"
+                                                 Height="8"
+                                                 Foreground="White"
+                                                 VerticalAlignment="Center"
+                                                 Opacity="0.5"/>
+                        
+                        <Border Grid.Column="2"
+                                Background="#33FFFFFF"
+                                CornerRadius="16"
+                                Padding="16,8">
+                            <TextBlock Text="{Binding WaveDescription}"
+                                       Foreground="White"
+                                       FontWeight="Medium"
+                                       FontSize="14"/>
+                        </Border>
+                    </Grid>
                 </StackPanel>
-            </materialDesign:Card>
+            </Grid>
         
             <!-- 웨이브 컨트롤 섹션 -->
-            <StackPanel Grid.Row="1">
+            <StackPanel Grid.Row="1" Margin="16">
                 <!-- Left Wave 컨트롤 -->
-                <materialDesign:Card Style="{StaticResource MaterialCard}">
+                <materialDesign:Card Margin="0,0,0,16"
+                                     Padding="24"
+                                     materialDesign:ElevationAssist.Elevation="Dp2"
+                                     UniformCornerRadius="16"
+                                     Background="{DynamicResource MaterialDesign.Brush.Card}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -68,11 +152,27 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         
-                        <TextBlock Grid.Row="0"
-                                   Text="LEFT WAVE" 
-                                   Style="{StaticResource MaterialDesignOverlineTextBlock}"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,16"/>
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Kind="HeadphonesSettings"
+                                                     Width="24"
+                                                     Height="24"
+                                                     Foreground="{DynamicResource PrimaryHueMidBrush}"
+                                                     Opacity="0.8"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,8,0"/>
+                            
+                            <TextBlock Grid.Column="1"
+                                       Text="LEFT CHANNEL" 
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
                         
                         <Grid Grid.Row="1" Margin="0,0,0,24">
                             <Grid.ColumnDefinitions>
@@ -82,30 +182,49 @@
                             </Grid.ColumnDefinitions>
                             
                             <Button Grid.Column="0" 
-                                    Style="{StaticResource CircularButton}"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding DecreaseLeftFrequencyCommand}"
-                                    ToolTip="Decrease frequency">
-                                <materialDesign:PackIcon Kind="Minus" Width="24" Height="24"/>
+                                    ToolTip="Decrease frequency"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="8"
+                                    Background="{DynamicResource SecondaryHueDarkBrush}"
+                                    Foreground="White">
+                                <materialDesign:PackIcon Kind="Minus" Width="20" Height="20"/>
                             </Button>
                             
-                            <StackPanel Grid.Column="1" 
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding LeftFrequency, StringFormat='{}{0:F2}'}" 
-                                           Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                                           HorizontalAlignment="Center"
-                                           Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                <TextBlock Text="Hz" 
-                                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                           HorizontalAlignment="Center"
-                                           Opacity="0.6"/>
-                            </StackPanel>
+                            <Border Grid.Column="1" 
+                                    CornerRadius="12"
+                                    Padding="24,12"
+                                    Margin="8">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{DynamicResource Primary300}" Opacity="0.15"/>
+                                </Border.Background>
+                                <StackPanel VerticalAlignment="Center"
+                                            HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding LeftFrequency, StringFormat='{}{0:F2}'}" 
+                                               Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                               FontWeight="Medium"/>
+                                    <TextBlock Text="Hz" 
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                               Opacity="0.8"/>
+                                </StackPanel>
+                            </Border>
                             
                             <Button Grid.Column="2" 
-                                    Style="{StaticResource CircularButton}"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding IncreaseLeftFrequencyCommand}"
-                                    ToolTip="Increase frequency">
-                                <materialDesign:PackIcon Kind="Plus" Width="24" Height="24"/>
+                                    ToolTip="Increase frequency"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="8"
+                                    Background="{DynamicResource SecondaryHueDarkBrush}"
+                                    Foreground="White">
+                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20"/>
                             </Button>
                         </Grid>
                         
@@ -114,8 +233,10 @@
                                 Minimum="20"
                                 Maximum="500"
                                 TickFrequency="10"
+                                IsSnapToTickEnabled="True"
                                 TickPlacement="None"
-                                Margin="0,0,0,16"/>
+                                Margin="0,0,0,16"
+                                materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"/>
                         
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -147,7 +268,11 @@
                 </materialDesign:Card>
                 
                 <!-- Right Wave 컨트롤 -->
-                <materialDesign:Card Style="{StaticResource MaterialCard}">
+                <materialDesign:Card Margin="0,0,0,16"
+                                     Padding="24"
+                                     materialDesign:ElevationAssist.Elevation="Dp2"
+                                     UniformCornerRadius="16"
+                                     Background="{DynamicResource MaterialDesign.Brush.Card}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -156,11 +281,27 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         
-                        <TextBlock Grid.Row="0"
-                                   Text="RIGHT WAVE" 
-                                   Style="{StaticResource MaterialDesignOverlineTextBlock}"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,16"/>
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Kind="HeadphonesSettings"
+                                                     Width="24"
+                                                     Height="24"
+                                                     Foreground="{DynamicResource SecondaryHueMidBrush}"
+                                                     Opacity="0.8"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,8,0"/>
+                            
+                            <TextBlock Grid.Column="1"
+                                       Text="RIGHT CHANNEL" 
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
                         
                         <Grid Grid.Row="1" Margin="0,0,0,24">
                             <Grid.ColumnDefinitions>
@@ -170,30 +311,49 @@
                             </Grid.ColumnDefinitions>
                             
                             <Button Grid.Column="0" 
-                                    Style="{StaticResource CircularButton}"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding DecreaseRightFrequencyCommand}"
-                                    ToolTip="Decrease frequency">
-                                <materialDesign:PackIcon Kind="Minus" Width="24" Height="24"/>
+                                    ToolTip="Decrease frequency"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="8"
+                                    Background="{DynamicResource SecondaryHueDarkBrush}"
+                                    Foreground="White">
+                                <materialDesign:PackIcon Kind="Minus" Width="20" Height="20"/>
                             </Button>
                             
-                            <StackPanel Grid.Column="1" 
-                                        VerticalAlignment="Center"
-                                        HorizontalAlignment="Center">
-                                <TextBlock Text="{Binding RightFrequency, StringFormat='{}{0:F2}'}" 
-                                           Style="{StaticResource MaterialDesignHeadline4TextBlock}"
-                                           HorizontalAlignment="Center"
-                                           Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-                                <TextBlock Text="Hz" 
-                                           Style="{StaticResource MaterialDesignCaptionTextBlock}"
-                                           HorizontalAlignment="Center"
-                                           Opacity="0.6"/>
-                            </StackPanel>
+                            <Border Grid.Column="1" 
+                                    CornerRadius="12"
+                                    Padding="24,12"
+                                    Margin="8">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{DynamicResource Secondary300}" Opacity="0.15"/>
+                                </Border.Background>
+                                <StackPanel VerticalAlignment="Center"
+                                            HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding RightFrequency, StringFormat='{}{0:F2}'}" 
+                                               Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{DynamicResource SecondaryHueDarkBrush}"
+                                               FontWeight="Medium"/>
+                                    <TextBlock Text="Hz" 
+                                               Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{DynamicResource SecondaryHueDarkBrush}"
+                                               Opacity="0.8"/>
+                                </StackPanel>
+                            </Border>
                             
                             <Button Grid.Column="2" 
-                                    Style="{StaticResource CircularButton}"
+                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding IncreaseRightFrequencyCommand}"
-                                    ToolTip="Increase frequency">
-                                <materialDesign:PackIcon Kind="Plus" Width="24" Height="24"/>
+                                    ToolTip="Increase frequency"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="8"
+                                    Background="{DynamicResource SecondaryHueDarkBrush}"
+                                    Foreground="White">
+                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20"/>
                             </Button>
                         </Grid>
                         
@@ -202,8 +362,10 @@
                                 Minimum="20"
                                 Maximum="500"
                                 TickFrequency="10"
+                                IsSnapToTickEnabled="True"
                                 TickPlacement="None"
-                                Margin="0,0,0,16"/>
+                                Margin="0,0,0,16"
+                                materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"/>
                         
                         <Grid Grid.Row="3">
                             <Grid.ColumnDefinitions>
@@ -236,7 +398,7 @@
             </StackPanel>
         
             <!-- 컨트롤 버튼 -->
-            <Grid Grid.Row="2" Margin="0,16,0,16">
+            <Grid Grid.Row="2" Margin="16,16,16,32">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="16"/>
@@ -244,22 +406,28 @@
                 </Grid.ColumnDefinitions>
                 
                 <Button Grid.Column="0" 
-                        Style="{StaticResource PlayButton}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Background="{DynamicResource SecondaryHueMidBrush}"
+                        BorderBrush="{DynamicResource SecondaryHueMidBrush}"
                         Command="{Binding TogglePlayCommand}"
+                        Height="56"
+                        materialDesign:ButtonAssist.CornerRadius="28"
                         materialDesign:ElevationAssist.Elevation="Dp6">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="{Binding PlayButtonIcon}" 
-                                                 Width="20" 
-                                                 Height="20"
+                                                 Width="24" 
+                                                 Height="24"
                                                  VerticalAlignment="Center"/>
                         <TextBlock Text="{Binding PlayButtonText}" 
-                                   Margin="8,0,0,0"
+                                   Margin="12,0,8,0"
+                                   FontSize="16"
+                                   FontWeight="Medium"
                                    VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
                 
                 <Button Grid.Column="2" 
-                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
                         Command="{Binding ShowTimerCommand}"
                         Height="48"
                         materialDesign:ButtonAssist.CornerRadius="24">

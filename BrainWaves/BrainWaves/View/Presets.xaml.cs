@@ -24,5 +24,10 @@ namespace BrainWaves.View
         {
             InitializeComponent();
         }
+
+        private void StopPropagation(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+        }
     }
 }

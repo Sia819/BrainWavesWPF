@@ -5,62 +5,246 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BrainWaves.View"
       xmlns:vm="clr-namespace:BrainWaves.ViewModel"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="400" d:Background="White"
+      d:DesignHeight="650" d:DesignWidth="400"
       Title="Presets">
-    <d:Page.DataContext>
-        <vm:MainViewModel/>
-    </d:Page.DataContext>
+    <Page.DataContext>
+        <vm:PresetsViewModel/>
+    </Page.DataContext>
+    
+    <Page.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard Storyboard="{StaticResource SlideIn}"/>
+        </EventTrigger>
+    </Page.Triggers>
+    
+    <Page.RenderTransform>
+        <TranslateTransform/>
+    </Page.RenderTransform>
 
-    <ListBox ItemsSource="{Binding PresetList}">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <!--<StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding PresetName}" />
-                    <TextBlock Text="{Binding LeftWave}" />
-                    <TextBlock Text="{Binding RightWave}" />
-                </StackPanel>-->
-                <Grid Width="300">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Text="img"/>
-                    <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        
-
-                        <DockPanel Grid.Row="0" Grid.ColumnSpan="3">
-                            <TextBlock Text="icon" HorizontalAlignment="Right" DockPanel.Dock="Right"/>
-                            <Border BorderThickness="1" BorderBrush="Gray" DockPanel.Dock="Left">
-                                <Border.Background>
-                                    <LinearGradientBrush EndPoint="0.0003,1" StartPoint="0.8,1">
-                                        <GradientStop Color="Black" Offset="0"/>
-                                        <GradientStop Color="Transparent" Offset="1.2"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
-                                <TextBlock Text="{Binding PresetName}"/>
-                            </Border>
-                        </DockPanel>
-                        <TextBlock Grid.Column="0" Grid.Row="1" Text="{Binding WaveName}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="1" Text="Left Wave"/>
-                        <TextBlock Grid.Column="2" Grid.Row="1" Text="Right Wave"/>
-                        <TextBlock Grid.Column="0" Grid.Row="2" Text="{Binding Resonance}"/>
-                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding LeftWave}"/>
-                        <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding RightWave}"/>
-
-                    </Grid>
-                </Grid>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!-- 헤더 섹션 -->
+        <materialDesign:ColorZone Grid.Row="0"
+                                  Mode="PrimaryMid"
+                                  Padding="16"
+                                  materialDesign:ElevationAssist.Elevation="Dp4">
+            <Grid>
+                <TextBlock Text="PRESETS"
+                           Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                           VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+                    <Button Style="{StaticResource MaterialDesignToolButton}"
+                            ToolTip="Filter presets">
+                        <materialDesign:PackIcon Kind="FilterVariant" />
+                    </Button>
+                    <Button Style="{StaticResource MaterialDesignToolButton}"
+                            ToolTip="Sort presets">
+                        <materialDesign:PackIcon Kind="Sort" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </materialDesign:ColorZone>
+        
+        <!-- 프리셋 목록 -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl ItemsSource="{Binding PresetList}"
+                          Margin="8">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal"
+                                   HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Margin="8"
+                                Width="180"
+                                Height="Auto"
+                                Padding="0"
+                                BorderThickness="0"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                Command="{Binding DataContext.SelectPresetCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                CommandParameter="{Binding}">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <materialDesign:Card Cursor="Hand"
+                                                         materialDesign:ElevationAssist.Elevation="Dp2"
+                                                         materialDesign:RippleAssist.Feedback="{DynamicResource PrimaryHueLightBrush}"
+                                                         materialDesign:RippleAssist.IsDisabled="False">
+                                        <materialDesign:Card.RenderTransform>
+                                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                                        </materialDesign:Card.RenderTransform>
+                                        <materialDesign:Card.RenderTransformOrigin>
+                                            <Point X="0.5" Y="0.5" />
+                                        </materialDesign:Card.RenderTransformOrigin>
+                                        <materialDesign:Card.Style>
+                                            <Style TargetType="materialDesign:Card">
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="materialDesign:ElevationAssist.Elevation" Value="Dp8"/>
+                                                        <Trigger.EnterActions>
+                                                            <BeginStoryboard Storyboard="{StaticResource CardHoverAnimation}"/>
+                                                        </Trigger.EnterActions>
+                                                        <Trigger.ExitActions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                                                                    To="1.0" Duration="0:0:0.2"/>
+                                                                    <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                                                    To="1.0" Duration="0:0:0.2"/>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </Trigger.ExitActions>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </materialDesign:Card.Style>
+                                        <materialDesign:Ripple Content="{TemplateBinding Content}"
+                                                               ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                               Focusable="False"
+                                                               HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                               VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                               Padding="{TemplateBinding Padding}"
+                                                               SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </materialDesign:Card>
+                                </ControlTemplate>
+                            </Button.Template>
+                            
+                            <Grid>
+                                
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="100"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <!-- 색상 헤더 영역 -->
+                                <Grid Grid.Row="0">
+                                    <Grid.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="{Binding WaveColor}" Offset="0"/>
+                                            <GradientStop Color="{Binding WaveColorDark}" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Grid.Background>
+                                    
+                                    <materialDesign:PackIcon Kind="{Binding WaveIcon}"
+                                                             Width="48"
+                                                             Height="48"
+                                                             HorizontalAlignment="Center"
+                                                             VerticalAlignment="Center"
+                                                             Foreground="White"
+                                                             Opacity="0.9"/>
+                                    
+                                    <!-- 재생/정지 버튼 (왼쪽 상단) -->
+                                    <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            Margin="8"
+                                            Width="32"
+                                            Height="32"
+                                            Command="{Binding DataContext.SelectPresetCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                            CommandParameter="{Binding}"
+                                            Click="StopPropagation"
+                                            Background="White"
+                                            Foreground="{Binding WaveColorDark}">
+                                        <Button.Effect>
+                                            <DropShadowEffect ShadowDepth="2" 
+                                                              Direction="270" 
+                                                              BlurRadius="4" 
+                                                              Opacity="0.3" 
+                                                              Color="Black"/>
+                                        </Button.Effect>
+                                        <materialDesign:PackIcon Width="18" Height="18">
+                                            <materialDesign:PackIcon.Style>
+                                                <Style TargetType="materialDesign:PackIcon">
+                                                    <Setter Property="Kind" Value="Play"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsPlaying}" Value="True">
+                                                            <Setter Property="Kind" Value="Pause"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </materialDesign:PackIcon.Style>
+                                        </materialDesign:PackIcon>
+                                    </Button>
+                                </Grid>
+                                
+                                <!-- 프리셋 정보 -->
+                                <Grid Grid.Row="1"
+                                      Margin="16,16,16,8">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding PresetName}"
+                                                   Style="{StaticResource MaterialDesignSubtitle1TextBlock}"
+                                                   FontWeight="Medium"/>
+                                        
+                                        <TextBlock Text="{Binding Resonance, StringFormat='{}{0:F2} Hz'}"
+                                                   Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                                   Opacity="0.7"
+                                                   Margin="0,4,0,0"/>
+                                    </StackPanel>
+                                    
+                                    <!-- 웨이브 타입 배지 (오른쪽 상단) -->
+                                    <Border HorizontalAlignment="Right"
+                                            VerticalAlignment="Top"
+                                            Margin="0,-8,-8,0"
+                                            CornerRadius="10"
+                                            Background="{Binding WaveColor}">
+                                        <TextBlock Text="{Binding WaveName}"
+                                                   Foreground="White"
+                                                   FontSize="10"
+                                                   FontWeight="Medium"
+                                                   Margin="8,3,8,3"/></Border>
+                                </Grid>
+                                
+                                <!-- 주파수 정보 -->
+                                <StackPanel Grid.Row="2"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            Margin="16,0,16,12">
+                                    <TextBlock Style="{StaticResource MaterialDesignCaptionTextBlock}"
+                                               VerticalAlignment="Center"
+                                               Opacity="0.8">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="L: {0:F1} Hz  •  R: {1:F1} Hz">
+                                                <Binding Path="LeftWave"/>
+                                                <Binding Path="RightWave"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        
+        <!-- Empty state -->
+        <Grid Grid.Row="1"
+              Visibility="{Binding IsPresetListEmpty, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <StackPanel VerticalAlignment="Center"
+                        HorizontalAlignment="Center"
+                        Opacity="0.5">
+                <materialDesign:PackIcon Kind="PlaylistRemove"
+                                         Width="64"
+                                         Height="64"
+                                         HorizontalAlignment="Center"/>
+                <TextBlock Text="No presets available"
+                           Style="{StaticResource MaterialDesignBody1TextBlock}"
+                           Margin="0,16,0,0"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
 </Page>

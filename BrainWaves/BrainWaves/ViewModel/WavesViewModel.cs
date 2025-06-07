@@ -2,13 +2,14 @@
 using System.Media;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using BrainWaves.Services;
 
 namespace BrainWaves.ViewModel
 {
     public partial class WavesViewModel : ObservableObject
     {
-        private SoundPlayer? _soundPlayer;
-        private bool _isPlaying;
+        private readonly AudioService _audioService;
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(Resonance))]
@@ -33,6 +34,9 @@ namespace BrainWaves.ViewModel
 
         [ObservableProperty]
         private string playButtonIcon = "Play";
+
+        [ObservableProperty]
+        private bool isPlaying;
 
         public double Resonance => Math.Abs(LeftFrequency - RightFrequency);
 
@@ -70,6 +74,51 @@ namespace BrainWaves.ViewModel
             }
         }
 
+        public WavesViewModel()
+        {
+            _audioService = AudioService.Instance;
+            
+            // 프리셋 선택 메시지 수신
+            WeakReferenceMessenger.Default.Register<PresetSelectedMessage>(this, (r, m) =>
+            {
+                LeftFrequency = m.LeftFrequency;
+                RightFrequency = m.RightFrequency;
+                LeftGain = m.LeftGain;
+                RightGain = m.RightGain;
+                
+                // 자동으로 재생 시작
+                PlaySound();
+            });
+            
+            // 재생 상태 변경 메시지 수신
+            WeakReferenceMessenger.Default.Register<PlaybackStateChangedMessage>(this, (r, m) =>
+            {
+                UpdatePlayButtonState(m.IsPlaying);
+            });
+            
+            // 오디오 파라미터 변경 메시지 수신  
+            WeakReferenceMessenger.Default.Register<AudioParametersChangedMessage>(this, (r, m) =>
+            {
+                // 다른 곳에서 파라미터가 변경되면 UI 업데이트
+                LeftFrequency = m.LeftFrequency;
+                RightFrequency = m.RightFrequency;
+                LeftGain = m.LeftGain;
+                RightGain = m.RightGain;
+            });
+            
+            // 초기 상태 설정
+            UpdatePlayButtonState(_audioService.IsPlaying);
+            
+            // 현재 재생 중인 값으로 초기화
+            if (_audioService.IsPlaying)
+            {
+                LeftFrequency = _audioService.CurrentLeftFrequency;
+                RightFrequency = _audioService.CurrentRightFrequency;
+                LeftGain = _audioService.CurrentLeftGain;
+                RightGain = _audioService.CurrentRightGain;
+            }
+        }
+
         [RelayCommand]
         private void IncreaseLeftFrequency()
         {
@@ -101,7 +150,7 @@ namespace BrainWaves.ViewModel
         [RelayCommand]
         private void TogglePlay()
         {
-            if (_isPlaying)
+            if (_audioService.IsPlaying)
             {
                 StopSound();
             }
@@ -113,34 +162,19 @@ namespace BrainWaves.ViewModel
 
         private void PlaySound()
         {
-            try
-            {
-                _soundPlayer?.Stop();
-                _soundPlayer?.Dispose();
-
-                var playSound = new PlaySound();
-                playSound.SetFrequencies(LeftFrequency, RightFrequency);
-                playSound.SetGains(LeftGain / 100.0, RightGain / 100.0);
-                
-                _soundPlayer = playSound.Play();
-                _isPlaying = true;
-                PlayButtonText = "Stop";
-                PlayButtonIcon = "Stop";
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Error playing sound: {ex.Message}");
-            }
+            _audioService.Play(LeftFrequency, RightFrequency, LeftGain / 100.0, RightGain / 100.0);
         }
 
         private void StopSound()
         {
-            _soundPlayer?.Stop();
-            _soundPlayer?.Dispose();
-            _soundPlayer = null;
-            _isPlaying = false;
-            PlayButtonText = "Play";
-            PlayButtonIcon = "Play";
+            _audioService.Stop();
+        }
+        
+        private void UpdatePlayButtonState(bool playing)
+        {
+            IsPlaying = playing;
+            PlayButtonText = playing ? "Stop" : "Play";
+            PlayButtonIcon = playing ? "Stop" : "Play";
         }
 
         [RelayCommand]
