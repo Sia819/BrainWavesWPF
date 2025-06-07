@@ -1,8 +1,6 @@
 {
-  "permissions":
-  {
-    "allow":
-    [
+  "permissions": {
+    "allow": [
       "Bash(*)",
       "Read(*)",
       "Write(*)",
@@ -12,10 +10,14 @@
       "Grep(*)",
       "LS(*)",
       "WebFetch(*)",
-      "WebSearch(*)"
+      "WebSearch(*)",
+      "Bash(mkdir:*)",
+      "Bash(dotnet build)",
+      "Bash(msbuild:*)",
+      "Bash(export:*)",
+      "Bash(ls:*)",
+      "Bash(rm:*)"
     ],
-    "deny":
-    [
-    ]
+    "deny": []
   }
 }
