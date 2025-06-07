@@ -1,27 +1,21 @@
 {
-  "permissions": {
-    "allow": [
+  "permissions":
+  {
+    "allow":
+    [
       "Bash(*)",
-      "Bash(echo $HOME)",
-      "Bash(dotnet build:*)",
-      "Bash(grep:*)",
-      "Bash(wget:*)",
-      "Bash(chmod:*)",
-      "Bash(./dotnet-install.sh:*)",
-      "Bash(export PATH=$PATH:$HOME/.dotnet)",
-      "Bash(dotnet --version)",
-      "Bash(export:*)",
-      "Bash(dotnet publish:*)",
-      "Bash(ls:*)",
-      "Bash(sha256sum:*)",
-      "Bash(mkdir:*)",
-      "Bash(cp:*)",
-      "Bash(tar:*)",
-      "Bash(find:*)",
-      "Bash(mv:*)",
-      "Bash(rm:*)",
-      "WebFetch(domain:docs.anthropic.com)"
+      "Read(*)",
+      "Write(*)",
+      "Edit(*)",
+      "MultiEdit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "LS(*)",
+      "WebFetch(*)",
+      "WebSearch(*)"
     ],
-    "deny": []
+    "deny":
+    [
+    ]
   }
 }

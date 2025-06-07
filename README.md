@@ -30,7 +30,7 @@ BrainWaves는 바이노럴 비트(Binaural Beats)를 생성하는 Windows 데스
 ## 시스템 요구사항
 
 - Windows 10 이상
-- .NET 6.0 Runtime
+- .NET 8.0 Runtime
 - 스테레오 헤드폰 또는 이어폰 (바이노럴 비트 효과를 위해 필수)
 
 ## 설치 방법
@@ -74,11 +74,10 @@ dotnet run --project BrainWaves/BrainWaves/BrainWaves.csproj
 
 ## 기술 스택
 
-- **프레임워크**: WPF (.NET 6.0)
+- **프레임워크**: WPF (.NET 8.0)
 - **아키텍처**: MVVM 패턴
 - **주요 라이브러리**:
-  - CommunityToolkit.Mvvm
-  - PropertyChanged.Fody
+  - CommunityToolkit.Mvvm (8.4.0)
 
 ## 라이선스
 

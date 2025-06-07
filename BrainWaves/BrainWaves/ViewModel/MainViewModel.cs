@@ -1,32 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using BrainWaves.Model;
-using CommunityToolkit.Mvvm;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BrainWaves.ViewModel
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public partial class MainViewModel : ObservableObject
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public Uri ShowingPageName { get; set; }
-        public RelayCommand<string> NavigateFrame { get; set; }
+        [ObservableProperty]
+        private Uri showingPageName;
 
         public ObservableCollection<PresetData> PresetList { get; set; }
 
         public MainViewModel()
         {
-            ShowingPageName = new Uri("pack://application:,,,/View/Waves.xaml");
-            NavigateFrame = new(d => NavigateFrame_Command(d));
+            showingPageName = new Uri("pack://application:,,,/View/Waves.xaml");
             PresetList = new ObservableCollection<PresetData>();
 
             PresetList.Add(new("Visualization", 101.08, 109.75));
@@ -44,16 +33,14 @@ namespace BrainWaves.ViewModel
             PresetList.Add(new("Relax", 95.66, 100.22));
         }
 
-        private void NavigateFrame_Command(string? pageName)
+        [RelayCommand]
+        private void NavigateFrame(string? pageName)
         {
             if (pageName is null) return;
             if (Uri.TryCreate(pageName, UriKind.Absolute, out Uri? result))
             {
                 ShowingPageName = result;
             }
-
         }
     }
-
 }
-
