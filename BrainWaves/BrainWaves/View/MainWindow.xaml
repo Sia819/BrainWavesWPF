@@ -64,7 +64,8 @@
             <materialDesign:Card Grid.Row="2"
                                  UniformCornerRadius="0"
                                  Padding="0"
-                                 materialDesign:ElevationAssist.Elevation="Dp8">
+                                 materialDesign:ElevationAssist.Elevation="Dp8"
+                                 Background="#1A1A2E">
                 <Grid Height="80">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
