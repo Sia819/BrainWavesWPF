@@ -124,13 +124,13 @@ namespace BrainWaves.ViewModel
             {
                 return WaveName switch
                 {
-                    "Gamma" => "#7B1FA2", // Purple 700
-                    "Beta" => "#8E24AA",  // Purple 600
-                    "Alpha" => "#9C27B0", // Purple 500
-                    "Theta" => "#AB47BC", // Purple 400
-                    "Delta" => "#BA68C8", // Purple 300
-                    "Infra-Low" => "#CE93D8", // Purple 200
-                    _ => "#9C27B0" // Purple 500
+                    "Gamma" => "#9C27B0", // Purple
+                    "Beta" => "#2196F3",  // Blue
+                    "Alpha" => "#4CAF50", // Green
+                    "Theta" => "#FF9800", // Orange
+                    "Delta" => "#F44336", // Red
+                    "Infra-Low" => "#795548", // Brown
+                    _ => "#607D8B" // Blue Grey
                 };
             }
         }
@@ -141,13 +141,13 @@ namespace BrainWaves.ViewModel
             {
                 return WaveName switch
                 {
-                    "Gamma" => "#4A148C", // Purple 900
-                    "Beta" => "#6A1B9A",  // Purple 800
-                    "Alpha" => "#7B1FA2", // Purple 700
-                    "Theta" => "#8E24AA", // Purple 600
-                    "Delta" => "#9C27B0", // Purple 500
-                    "Infra-Low" => "#AB47BC", // Purple 400
-                    _ => "#7B1FA2" // Purple 700
+                    "Gamma" => "#6A1B9A", // Purple Dark
+                    "Beta" => "#1565C0",  // Blue Dark
+                    "Alpha" => "#2E7D32", // Green Dark
+                    "Theta" => "#E65100", // Orange Dark
+                    "Delta" => "#B71C1C", // Red Dark
+                    "Infra-Low" => "#4E342E", // Brown Dark
+                    _ => "#37474F" // Blue Grey Dark
                 };
             }
         }

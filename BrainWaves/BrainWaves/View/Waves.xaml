@@ -23,23 +23,20 @@
         <TranslateTransform/>
     </Page.RenderTransform>
     
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-        <Grid>
+    <Grid Background="#0E0E1A">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
         
-            <!-- 헤더 섹션 - 그라데이션 배경 -->
-            <Grid Grid.Row="0" Height="200">
+            <!-- 헤더 섹션 -->
+            <Grid Grid.Row="0" Height="140">
                 <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#1A237E" Offset="0"/>
-                        <GradientStop Color="#283593" Offset="0.5"/>
-                        <GradientStop Color="#3949AB" Offset="1"/>
-                    </LinearGradientBrush>
+                    <SolidColorBrush Color="#0E0E1A"/>
                 </Grid.Background>
                 
                 <!-- 웨이브 패턴 오버레이 -->
@@ -63,11 +60,12 @@
                             HorizontalAlignment="Center">
                     <!-- 메인 주파수 표시 -->
                     <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center">
+                                HorizontalAlignment="Center"
+                                Margin="0,10,0,0">
                         <TextBlock Text="{Binding Resonance, StringFormat='{}{0:F2}'}"
                                    Foreground="White"
                                    FontWeight="Light"
-                                   FontSize="72"
+                                   FontSize="56"
                                    VerticalAlignment="Bottom">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
@@ -106,13 +104,13 @@
                         </Grid.ColumnDefinitions>
                         
                         <Border Grid.Column="0"
-                                Background="#33FFFFFF"
-                                CornerRadius="16"
+                                Background="#6C63FF"
+                                CornerRadius="20"
                                 Padding="16,8">
                             <TextBlock Text="{Binding WaveType}"
                                        Foreground="White"
                                        FontWeight="Medium"
-                                       FontSize="14"/>
+                                       FontSize="12"/>
                         </Border>
                         
                         <materialDesign:PackIcon Grid.Column="1"
@@ -124,27 +122,25 @@
                                                  Opacity="0.5"/>
                         
                         <Border Grid.Column="2"
-                                Background="#33FFFFFF"
-                                CornerRadius="16"
+                                Background="#6C63FF"
+                                CornerRadius="20"
                                 Padding="16,8">
                             <TextBlock Text="{Binding WaveDescription}"
                                        Foreground="White"
                                        FontWeight="Medium"
-                                       FontSize="14"/>
+                                       FontSize="12"/>
                         </Border>
                     </Grid>
                 </StackPanel>
             </Grid>
         
             <!-- 웨이브 컨트롤 섹션 -->
-            <StackPanel Grid.Row="1" Margin="16">
+            <StackPanel Grid.Row="1" Margin="12,8">
                 <!-- Left Wave 컨트롤 -->
-                <materialDesign:Card Margin="0,0,0,16"
-                                     Padding="24"
-                                     materialDesign:ElevationAssist.Elevation="Dp2"
-                                     UniformCornerRadius="16"
-                                     Background="{DynamicResource MaterialDesign.Brush.Card}">
-                    <Grid>
+                <Border Margin="8,0,8,8"
+                        CornerRadius="20"
+                        Background="#1A1A2E">
+                    <Grid Margin="12">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -152,7 +148,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         
-                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -160,21 +156,22 @@
                             
                             <materialDesign:PackIcon Grid.Column="0"
                                                      Kind="HeadphonesSettings"
-                                                     Width="24"
-                                                     Height="24"
+                                                     Width="20"
+                                                     Height="20"
                                                      Foreground="{DynamicResource PrimaryHueMidBrush}"
-                                                     Opacity="0.8"
+                                                     Opacity="0.6"
                                                      VerticalAlignment="Center"
-                                                     Margin="0,0,8,0"/>
+                                                     Margin="0,0,6,0"/>
                             
                             <TextBlock Grid.Column="1"
                                        Text="LEFT CHANNEL" 
                                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                        FontWeight="Medium"
+                                       Foreground="#E0E0E0"
                                        VerticalAlignment="Center"/>
                         </Grid>
                         
-                        <Grid Grid.Row="1" Margin="0,0,0,24">
+                        <Grid Grid.Row="1" Margin="0,0,0,12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -182,49 +179,69 @@
                             </Grid.ColumnDefinitions>
                             
                             <Button Grid.Column="0" 
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding DecreaseLeftFrequencyCommand}"
                                     ToolTip="Decrease frequency"
-                                    Width="40"
-                                    Height="40"
+                                    Width="32"
+                                    Height="32"
                                     Margin="8"
-                                    Background="{DynamicResource SecondaryHueDarkBrush}"
-                                    Foreground="White">
-                                <materialDesign:PackIcon Kind="Minus" Width="20" Height="20"/>
+                                    Background="Transparent"
+                                    BorderBrush="#6C63FF"
+                                    BorderThickness="2"
+                                    materialDesign:ButtonAssist.CornerRadius="18">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="18">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <materialDesign:PackIcon Kind="Minus" Width="20" Height="20" Foreground="White"/>
                             </Button>
                             
                             <Border Grid.Column="1" 
                                     CornerRadius="12"
                                     Padding="24,12"
-                                    Margin="8">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{DynamicResource Primary300}" Opacity="0.15"/>
-                                </Border.Background>
+                                    Margin="8"
+                                    Background="#6C63FF">
                                 <StackPanel VerticalAlignment="Center"
                                             HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding LeftFrequency, StringFormat='{}{0:F2}'}" 
                                                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                                                HorizontalAlignment="Center"
-                                               Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                               Foreground="White"
                                                FontWeight="Medium"/>
                                     <TextBlock Text="Hz" 
                                                Style="{StaticResource MaterialDesignCaptionTextBlock}"
                                                HorizontalAlignment="Center"
-                                               Foreground="{DynamicResource PrimaryHueDarkBrush}"
+                                               Foreground="White"
                                                Opacity="0.8"/>
                                 </StackPanel>
                             </Border>
                             
                             <Button Grid.Column="2" 
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding IncreaseLeftFrequencyCommand}"
                                     ToolTip="Increase frequency"
-                                    Width="40"
-                                    Height="40"
+                                    Width="32"
+                                    Height="32"
                                     Margin="8"
-                                    Background="{DynamicResource SecondaryHueDarkBrush}"
-                                    Foreground="White">
-                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20"/>
+                                    Background="Transparent"
+                                    BorderBrush="#6C63FF"
+                                    BorderThickness="2"
+                                    materialDesign:ButtonAssist.CornerRadius="18">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="18">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" Foreground="White"/>
                             </Button>
                         </Grid>
                         
@@ -235,7 +252,8 @@
                                 TickFrequency="10"
                                 IsSnapToTickEnabled="True"
                                 TickPlacement="None"
-                                Margin="0,0,0,16"
+                                Margin="0,0,0,8"
+                                Foreground="#6C63FF"
                                 materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"/>
                         
                         <Grid Grid.Row="3">
@@ -248,13 +266,15 @@
                             <materialDesign:PackIcon Grid.Column="0" 
                                                      Kind="VolumeHigh" 
                                                      VerticalAlignment="Center"
-                                                     Opacity="0.6"
+                                                     Foreground="#E0E0E0"
+                                                     Opacity="0.8"
                                                      Margin="0,0,16,0"/>
                             
                             <Slider Grid.Column="1" 
                                     Value="{Binding LeftGain, Mode=TwoWay}" 
                                     Maximum="100"
-                                    VerticalAlignment="Center"/>
+                                    VerticalAlignment="Center"
+                                    Foreground="#6C63FF"/>
                             
                             <TextBlock Grid.Column="2" 
                                        Text="{Binding LeftGain, StringFormat='{}{0:F0}%'}" 
@@ -262,18 +282,17 @@
                                        VerticalAlignment="Center"
                                        MinWidth="40"
                                        TextAlignment="Right"
+                                       Foreground="#E0E0E0"
                                        Margin="16,0,0,0"/>
                         </Grid>
                     </Grid>
-                </materialDesign:Card>
+                </Border>
                 
                 <!-- Right Wave 컨트롤 -->
-                <materialDesign:Card Margin="0,0,0,16"
-                                     Padding="24"
-                                     materialDesign:ElevationAssist.Elevation="Dp2"
-                                     UniformCornerRadius="16"
-                                     Background="{DynamicResource MaterialDesign.Brush.Card}">
-                    <Grid>
+                <Border Margin="8,0,8,8"
+                        CornerRadius="20"
+                        Background="#1A1A2E">
+                    <Grid Margin="12">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
@@ -281,7 +300,7 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         
-                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -289,21 +308,22 @@
                             
                             <materialDesign:PackIcon Grid.Column="0"
                                                      Kind="HeadphonesSettings"
-                                                     Width="24"
-                                                     Height="24"
+                                                     Width="20"
+                                                     Height="20"
                                                      Foreground="{DynamicResource SecondaryHueMidBrush}"
-                                                     Opacity="0.8"
+                                                     Opacity="0.6"
                                                      VerticalAlignment="Center"
-                                                     Margin="0,0,8,0"/>
+                                                     Margin="0,0,6,0"/>
                             
                             <TextBlock Grid.Column="1"
                                        Text="RIGHT CHANNEL" 
                                        Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
                                        FontWeight="Medium"
+                                       Foreground="#E0E0E0"
                                        VerticalAlignment="Center"/>
                         </Grid>
                         
-                        <Grid Grid.Row="1" Margin="0,0,0,24">
+                        <Grid Grid.Row="1" Margin="0,0,0,12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -311,49 +331,69 @@
                             </Grid.ColumnDefinitions>
                             
                             <Button Grid.Column="0" 
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding DecreaseRightFrequencyCommand}"
                                     ToolTip="Decrease frequency"
-                                    Width="40"
-                                    Height="40"
+                                    Width="32"
+                                    Height="32"
                                     Margin="8"
-                                    Background="{DynamicResource SecondaryHueDarkBrush}"
-                                    Foreground="White">
-                                <materialDesign:PackIcon Kind="Minus" Width="20" Height="20"/>
+                                    Background="Transparent"
+                                    BorderBrush="#6C63FF"
+                                    BorderThickness="2"
+                                    materialDesign:ButtonAssist.CornerRadius="18">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="18">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <materialDesign:PackIcon Kind="Minus" Width="20" Height="20" Foreground="White"/>
                             </Button>
                             
                             <Border Grid.Column="1" 
                                     CornerRadius="12"
                                     Padding="24,12"
-                                    Margin="8">
-                                <Border.Background>
-                                    <SolidColorBrush Color="{DynamicResource Secondary300}" Opacity="0.15"/>
-                                </Border.Background>
+                                    Margin="8"
+                                    Background="#6C63FF">
                                 <StackPanel VerticalAlignment="Center"
                                             HorizontalAlignment="Center">
                                     <TextBlock Text="{Binding RightFrequency, StringFormat='{}{0:F2}'}" 
                                                Style="{StaticResource MaterialDesignHeadline4TextBlock}"
                                                HorizontalAlignment="Center"
-                                               Foreground="{DynamicResource SecondaryHueDarkBrush}"
+                                               Foreground="White"
                                                FontWeight="Medium"/>
                                     <TextBlock Text="Hz" 
                                                Style="{StaticResource MaterialDesignCaptionTextBlock}"
                                                HorizontalAlignment="Center"
-                                               Foreground="{DynamicResource SecondaryHueDarkBrush}"
+                                               Foreground="White"
                                                Opacity="0.8"/>
                                 </StackPanel>
                             </Border>
                             
                             <Button Grid.Column="2" 
-                                    Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Command="{Binding IncreaseRightFrequencyCommand}"
                                     ToolTip="Increase frequency"
-                                    Width="40"
-                                    Height="40"
+                                    Width="32"
+                                    Height="32"
                                     Margin="8"
-                                    Background="{DynamicResource SecondaryHueDarkBrush}"
-                                    Foreground="White">
-                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20"/>
+                                    Background="Transparent"
+                                    BorderBrush="#6C63FF"
+                                    BorderThickness="2"
+                                    materialDesign:ButtonAssist.CornerRadius="18">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="18">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <materialDesign:PackIcon Kind="Plus" Width="20" Height="20" Foreground="White"/>
                             </Button>
                         </Grid>
                         
@@ -364,7 +404,8 @@
                                 TickFrequency="10"
                                 IsSnapToTickEnabled="True"
                                 TickPlacement="None"
-                                Margin="0,0,0,16"
+                                Margin="0,0,0,8"
+                                Foreground="#6C63FF"
                                 materialDesign:SliderAssist.OnlyShowFocusVisualWhileDragging="True"/>
                         
                         <Grid Grid.Row="3">
@@ -377,13 +418,15 @@
                             <materialDesign:PackIcon Grid.Column="0" 
                                                      Kind="VolumeHigh" 
                                                      VerticalAlignment="Center"
-                                                     Opacity="0.6"
+                                                     Foreground="#E0E0E0"
+                                                     Opacity="0.8"
                                                      Margin="0,0,16,0"/>
                             
                             <Slider Grid.Column="1" 
                                     Value="{Binding RightGain, Mode=TwoWay}" 
                                     Maximum="100"
-                                    VerticalAlignment="Center"/>
+                                    VerticalAlignment="Center"
+                                    Foreground="#6C63FF"/>
                             
                             <TextBlock Grid.Column="2" 
                                        Text="{Binding RightGain, StringFormat='{}{0:F0}%'}" 
@@ -391,14 +434,15 @@
                                        VerticalAlignment="Center"
                                        MinWidth="40"
                                        TextAlignment="Right"
+                                       Foreground="#E0E0E0"
                                        Margin="16,0,0,0"/>
                         </Grid>
                     </Grid>
-                </materialDesign:Card>
+                </Border>
             </StackPanel>
         
             <!-- 컨트롤 버튼 -->
-            <Grid Grid.Row="2" Margin="16,16,16,32">
+            <Grid Grid.Row="2" Margin="12,8,12,16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition Width="16"/>
@@ -407,12 +451,13 @@
                 
                 <Button Grid.Column="0" 
                         Style="{StaticResource MaterialDesignRaisedButton}"
-                        Background="{DynamicResource SecondaryHueMidBrush}"
-                        BorderBrush="{DynamicResource SecondaryHueMidBrush}"
+                        Background="#6C63FF"
+                        BorderBrush="#6C63FF"
+                        Foreground="White"
                         Command="{Binding TogglePlayCommand}"
                         Height="56"
                         materialDesign:ButtonAssist.CornerRadius="28"
-                        materialDesign:ElevationAssist.Elevation="Dp6">
+                        materialDesign:ElevationAssist.Elevation="Dp4">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="{Binding PlayButtonIcon}" 
                                                  Width="24" 
@@ -428,6 +473,8 @@
                 
                 <Button Grid.Column="2" 
                         Style="{StaticResource MaterialDesignOutlinedButton}"
+                        BorderBrush="#6C63FF"
+                        Foreground="#6C63FF"
                         Command="{Binding ShowTimerCommand}"
                         Height="48"
                         materialDesign:ButtonAssist.CornerRadius="24">
@@ -442,6 +489,7 @@
                     </StackPanel>
                 </Button>
             </Grid>
-        </Grid>
-    </ScrollViewer>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
 </Page>

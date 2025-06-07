@@ -30,27 +30,32 @@
         </Grid.RowDefinitions>
         
         <!-- 헤더 섹션 -->
-        <materialDesign:ColorZone Grid.Row="0"
-                                  Mode="PrimaryMid"
-                                  Padding="16"
-                                  materialDesign:ElevationAssist.Elevation="Dp4">
+        <Border Grid.Row="0"
+                Background="#2E2E2E"
+                Padding="16">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="2" Direction="270" BlurRadius="4" Opacity="0.2" Color="Black"/>
+            </Border.Effect>
             <Grid>
                 <TextBlock Text="PRESETS"
                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+                           Foreground="White"
                            VerticalAlignment="Center"/>
                 <StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
                     <Button Style="{StaticResource MaterialDesignToolButton}"
+                            Foreground="White"
                             ToolTip="Filter presets">
                         <materialDesign:PackIcon Kind="FilterVariant" />
                     </Button>
                     <Button Style="{StaticResource MaterialDesignToolButton}"
+                            Foreground="White"
                             ToolTip="Sort presets">
                         <materialDesign:PackIcon Kind="Sort" />
                     </Button>
                 </StackPanel>
             </Grid>
-        </materialDesign:ColorZone>
+        </Border>
         
         <!-- 프리셋 목록 -->
         <ScrollViewer Grid.Row="1"
