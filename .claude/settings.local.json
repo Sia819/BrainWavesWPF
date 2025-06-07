@@ -16,7 +16,8 @@
       "Bash(msbuild:*)",
       "Bash(export:*)",
       "Bash(ls:*)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
