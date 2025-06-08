@@ -1,5 +1,4 @@
 using System;
-using System.Media;
 using System.Threading;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -10,7 +9,7 @@ namespace BrainWaves.Services
     public class AudioService : ObservableObject
     {
         private static AudioService? _instance;
-        private SoundPlayer? _soundPlayer;
+        private PlaySound? _playSound;
         private bool _isPlaying;
         private double _currentLeftFrequency;
         private double _currentRightFrequency;
@@ -65,16 +64,16 @@ namespace BrainWaves.Services
                 try
                 {
                     // 기존 사운드 정지
-                    _soundPlayer?.Stop();
-                    _soundPlayer?.Dispose();
-                    _soundPlayer = null;
+                    _playSound?.Stop();
+                    _playSound?.Dispose();
+                    _playSound = null;
 
                     // 새 사운드 생성 및 재생
-                    var playSound = new PlaySound();
-                    playSound.SetFrequencies(leftFrequency, rightFrequency);
-                    playSound.SetGains(leftGain, rightGain);
-
-                    _soundPlayer = playSound.Play();
+                    _playSound = new PlaySound();
+                    _playSound.SetFrequencies(leftFrequency, rightFrequency);
+                    _playSound.SetGains(leftGain, rightGain);
+                    _playSound.Play();
+                    
                     _currentLeftFrequency = leftFrequency;
                     _currentRightFrequency = rightFrequency;
                     _currentLeftGain = leftGain * 100; // 0.0-1.0을 0-100으로 변환
@@ -98,9 +97,9 @@ namespace BrainWaves.Services
             
             lock (_playbackLock)
             {
-                _soundPlayer?.Stop();
-                _soundPlayer?.Dispose();
-                _soundPlayer = null;
+                _playSound?.Stop();
+                _playSound?.Dispose();
+                _playSound = null;
                 IsPlaying = false;
             }
         }
