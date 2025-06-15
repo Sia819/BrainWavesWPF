@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -24,6 +25,10 @@ namespace BrainWaves.View
         public Settings()
         {
             InitializeComponent();
+            
+            // Get version from assembly
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            VersionText.Text = $"Version {version?.Major}.{version?.Minor}.{version?.Build}";
         }
         
         private void GitHub_Click(object sender, RoutedEventArgs e)

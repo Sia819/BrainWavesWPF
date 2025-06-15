@@ -64,7 +64,7 @@
                                            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
                                            Foreground="White"
                                            Margin="0,0,0,4"/>
-                                <TextBlock Text="Version 1.0.0" 
+                                <TextBlock x:Name="VersionText"
                                            Style="{StaticResource MaterialDesignBody2TextBlock}"
                                            Foreground="#B0B0B0"/>
                             </StackPanel>
