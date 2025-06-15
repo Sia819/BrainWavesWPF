@@ -18,7 +18,10 @@
       "Bash(ls:*)",
       "Bash(rm:*)",
       "Bash(git add:*)",
-      "Bash(dotnet add package NAudio)"
+      "Bash(dotnet add package NAudio)",
+      "Bash(git commit:*)",
+      "Bash(git config:*)",
+      "Bash(git tag:*)"
     ],
     "deny": []
   }
