@@ -27,7 +27,7 @@ jobs:
       
     - name: Publish
       run: |
-        dotnet publish ./BrainWaves/BrainWaves/BrainWaves.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true -p:PublishTrimmed=true -p:PublishReadyToRun=true -o ./publish
+        dotnet publish ./BrainWaves/BrainWaves/BrainWaves.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained true -p:PublishReadyToRun=true -o ./publish
         
     - name: Create Release
       uses: softprops/action-gh-release@v1
