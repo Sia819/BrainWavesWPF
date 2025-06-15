@@ -439,6 +439,71 @@
                         </Grid>
                     </Grid>
                 </Border>
+                
+                <!-- Master Volume 컨트롤 -->
+                <Border Margin="8,0,8,8"
+                        CornerRadius="20"
+                        Background="#1A1A2E">
+                    <Grid Margin="12">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <materialDesign:PackIcon Grid.Column="0"
+                                                     Kind="Speaker"
+                                                     Width="20"
+                                                     Height="20"
+                                                     Foreground="#6C63FF"
+                                                     Opacity="0.8"
+                                                     VerticalAlignment="Center"
+                                                     Margin="0,0,6,0"/>
+                            
+                            <TextBlock Grid.Column="1"
+                                       Text="MASTER VOLUME" 
+                                       Style="{StaticResource MaterialDesignSubtitle2TextBlock}"
+                                       FontWeight="Medium"
+                                       Foreground="#E0E0E0"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+                        
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <materialDesign:PackIcon Grid.Column="0" 
+                                                     Kind="VolumeHigh" 
+                                                     VerticalAlignment="Center"
+                                                     Foreground="#E0E0E0"
+                                                     Opacity="0.8"
+                                                     Margin="0,0,16,0"/>
+                            
+                            <Slider Grid.Column="1" 
+                                    Value="{Binding MasterVolume, Mode=TwoWay}" 
+                                    Maximum="100"
+                                    VerticalAlignment="Center"
+                                    Foreground="#6C63FF"/>
+                            
+                            <TextBlock Grid.Column="2" 
+                                       Text="{Binding MasterVolume, StringFormat='{}{0:F0}%'}" 
+                                       Style="{StaticResource MaterialDesignBody2TextBlock}"
+                                       VerticalAlignment="Center"
+                                       MinWidth="40"
+                                       TextAlignment="Right"
+                                       Foreground="#E0E0E0"
+                                       Margin="16,0,0,0"/>
+                        </Grid>
+                    </Grid>
+                </Border>
             </StackPanel>
         
             <!-- 컨트롤 버튼 -->

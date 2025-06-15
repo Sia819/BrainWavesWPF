@@ -30,6 +30,9 @@ namespace BrainWaves.ViewModel
         private double rightGain = 50.0;
 
         [ObservableProperty]
+        private double masterVolume = 50.0;
+
+        [ObservableProperty]
         private string playButtonText = "Play";
 
         [ObservableProperty]
@@ -104,6 +107,7 @@ namespace BrainWaves.ViewModel
                 RightFrequency = m.RightFrequency;
                 LeftGain = m.LeftGain;
                 RightGain = m.RightGain;
+                MasterVolume = m.MasterVolume;
             });
             
             // 초기 상태 설정
@@ -116,6 +120,16 @@ namespace BrainWaves.ViewModel
                 RightFrequency = _audioService.CurrentRightFrequency;
                 LeftGain = _audioService.CurrentLeftGain;
                 RightGain = _audioService.CurrentRightGain;
+                MasterVolume = _audioService.CurrentMasterVolume;
+            }
+        }
+
+        partial void OnMasterVolumeChanged(double value)
+        {
+            if (_audioService.IsPlaying)
+            {
+                // 마스터 볼륨 변경 시 즉시 적용
+                _audioService.SetMasterVolume(value / 100.0);
             }
         }
 
@@ -162,7 +176,7 @@ namespace BrainWaves.ViewModel
 
         private void PlaySound()
         {
-            _audioService.Play(LeftFrequency, RightFrequency, LeftGain / 100.0, RightGain / 100.0);
+            _audioService.Play(LeftFrequency, RightFrequency, LeftGain / 100.0, RightGain / 100.0, MasterVolume / 100.0);
         }
 
         private void StopSound()

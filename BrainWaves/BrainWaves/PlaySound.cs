@@ -10,6 +10,7 @@ namespace BrainWaves
         private double _rightFrequency = 73.0;
         private double _leftGain = 0.5;
         private double _rightGain = 0.5;
+        private double _masterVolume = 0.5;
         private IWavePlayer? _waveOut;
         private BinauralBeatProvider? _binauralBeatProvider;
 
@@ -31,7 +32,17 @@ namespace BrainWaves
             
             if (_binauralBeatProvider != null)
             {
-                _binauralBeatProvider.SetGains(_leftGain, _rightGain);
+                _binauralBeatProvider.SetGains(_leftGain * _masterVolume, _rightGain * _masterVolume);
+            }
+        }
+        
+        public void SetMasterVolume(double masterVolume)
+        {
+            _masterVolume = Math.Max(0, Math.Min(1, masterVolume));
+            
+            if (_binauralBeatProvider != null)
+            {
+                _binauralBeatProvider.SetGains(_leftGain * _masterVolume, _rightGain * _masterVolume);
             }
         }
 
@@ -39,7 +50,7 @@ namespace BrainWaves
         {
             Stop();
 
-            _binauralBeatProvider = new BinauralBeatProvider(_leftFrequency, _rightFrequency, _leftGain, _rightGain);
+            _binauralBeatProvider = new BinauralBeatProvider(_leftFrequency, _rightFrequency, _leftGain * _masterVolume, _rightGain * _masterVolume);
             _waveOut = new WaveOutEvent
             {
                 DesiredLatency = 100 // 100ms latency for smooth playback

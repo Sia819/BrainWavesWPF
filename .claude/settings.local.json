@@ -17,7 +17,8 @@
       "Bash(export:*)",
       "Bash(ls:*)",
       "Bash(rm:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(dotnet add package NAudio)"
     ],
     "deny": []
   }
