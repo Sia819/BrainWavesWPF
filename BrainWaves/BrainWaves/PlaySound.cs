@@ -1,6 +1,5 @@
 ﻿using System;
 using NAudio.Wave;
-using NAudio.Wave.SampleProviders;
 
 namespace BrainWaves
 {
@@ -18,7 +17,7 @@ namespace BrainWaves
         {
             _leftFrequency = left;
             _rightFrequency = right;
-            
+
             if (_binauralBeatProvider != null)
             {
                 _binauralBeatProvider.SetFrequencies(left, right);
@@ -29,17 +28,17 @@ namespace BrainWaves
         {
             _leftGain = Math.Max(0, Math.Min(1, left));
             _rightGain = Math.Max(0, Math.Min(1, right));
-            
+
             if (_binauralBeatProvider != null)
             {
                 _binauralBeatProvider.SetGains(_leftGain * _masterVolume, _rightGain * _masterVolume);
             }
         }
-        
+
         public void SetMasterVolume(double masterVolume)
         {
             _masterVolume = Math.Max(0, Math.Min(1, masterVolume));
-            
+
             if (_binauralBeatProvider != null)
             {
                 _binauralBeatProvider.SetGains(_leftGain * _masterVolume, _rightGain * _masterVolume);
@@ -55,7 +54,7 @@ namespace BrainWaves
             {
                 DesiredLatency = 100 // 100ms latency for smooth playback
             };
-            
+
             _waveOut.Init(_binauralBeatProvider);
             _waveOut.Play();
         }

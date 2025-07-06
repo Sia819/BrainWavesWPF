@@ -1,8 +1,7 @@
 ﻿<Application x:Class="BrainWaves.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:BrainWaves"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:converters="clr-namespace:BrainWaves.Converters"
              StartupUri="pack://application:,,,/View/MainWindow.xaml">
     <Application.Resources>
@@ -11,12 +10,12 @@
                 <!-- Material Design -->
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Indigo" SecondaryColor="Purple" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
-                
+
                 <!-- Material Design 폰트 -->
                 <ResourceDictionary>
                     <FontFamily x:Key="MaterialDesignFont">pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto</FontFamily>
                 </ResourceDictionary>
-                
+
                 <!-- 커스텀 스타일 리소스 -->
                 <ResourceDictionary Source="/Resources/Styles/ButtonStyles.xaml"/>
                 <ResourceDictionary Source="/Resources/Styles/CardStyles.xaml"/>
@@ -24,7 +23,7 @@
                 <ResourceDictionary Source="/Resources/Styles/SliderStyles.xaml"/>
                 <ResourceDictionary Source="/Resources/Animations/Storyboards.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <!-- 컨버터 -->
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <converters:BoolToPlayStopTextConverter x:Key="BoolToPlayStopTextConverter"/>

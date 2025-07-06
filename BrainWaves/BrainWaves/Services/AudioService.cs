@@ -76,7 +76,7 @@ namespace BrainWaves.Services
                     _playSound.SetGains(leftGain, rightGain);
                     _playSound.SetMasterVolume(masterVolume);
                     _playSound.Play();
-                    
+
                     _currentLeftFrequency = leftFrequency;
                     _currentRightFrequency = rightFrequency;
                     _currentLeftGain = leftGain * 100; // 0.0-1.0을 0-100으로 변환
@@ -98,7 +98,7 @@ namespace BrainWaves.Services
         public void Stop()
         {
             _playbackCts?.Cancel();
-            
+
             lock (_playbackLock)
             {
                 _playSound?.Stop();
@@ -107,22 +107,22 @@ namespace BrainWaves.Services
                 IsPlaying = false;
             }
         }
-        
+
         public void SetMasterVolume(double masterVolume)
         {
             lock (_playbackLock)
             {
                 _currentMasterVolume = masterVolume;
                 _playSound?.SetMasterVolume(masterVolume);
-                
+
                 if (IsPlaying)
                 {
                     // 마스터 볼륨 변경 메시지 전송
                     WeakReferenceMessenger.Default.Send(new AudioParametersChangedMessage(
-                        _currentLeftFrequency, 
-                        _currentRightFrequency, 
-                        _currentLeftGain, 
-                        _currentRightGain, 
+                        _currentLeftFrequency,
+                        _currentRightFrequency,
+                        _currentLeftGain,
+                        _currentRightGain,
                         _currentMasterVolume * 100));
                 }
             }

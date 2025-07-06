@@ -19,7 +19,7 @@ namespace BrainWaves.Model
         private double rightWave;
 
         public double Resonance => Math.Abs(LeftWave - RightWave);
-        
+
         public string WaveName
         {
             get

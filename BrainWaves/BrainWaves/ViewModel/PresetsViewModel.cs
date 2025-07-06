@@ -1,13 +1,10 @@
-using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Media;
-using System.Windows.Media;
+using BrainWaves.Model;
+using BrainWaves.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using BrainWaves.Model;
-using BrainWaves.Services;
 
 namespace BrainWaves.ViewModel
 {
@@ -28,14 +25,14 @@ namespace BrainWaves.ViewModel
             // MainViewModel에서 프리셋 리스트 가져오기
             _mainViewModel = new MainViewModel();
             _audioService = AudioService.Instance;
-            
+
             // PresetData를 PresetDataViewModel로 변환
             PresetList = new ObservableCollection<PresetDataViewModel>(
                 _mainViewModel.PresetList.Select(p => new PresetDataViewModel(p))
             );
 
             IsPresetListEmpty = PresetList.Count == 0;
-            
+
             // 재생 상태 변경 메시지 수신
             WeakReferenceMessenger.Default.Register<PlaybackStateChangedMessage>(this, (r, m) =>
             {
@@ -70,12 +67,12 @@ namespace BrainWaves.ViewModel
                 {
                     _currentlyPlayingPreset.IsPlaying = false;
                 }
-                
+
                 // 다른 프리셋 또는 정지 상태에서 클릭하면 재생
                 _audioService.Play(preset.LeftWave, preset.RightWave, 0.5, 0.5);
                 preset.IsPlaying = true;
                 _currentlyPlayingPreset = preset;
-                
+
                 // Waves 페이지로 주파수 데이터 전송 (필요한 경우)
                 WeakReferenceMessenger.Default.Send(new PresetSelectedMessage(preset.LeftWave, preset.RightWave, 50.0, 50.0));
             }

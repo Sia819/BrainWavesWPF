@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Media;
+using BrainWaves.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using BrainWaves.Services;
 
 namespace BrainWaves.ViewModel
 {
@@ -80,7 +79,7 @@ namespace BrainWaves.ViewModel
         public WavesViewModel()
         {
             _audioService = AudioService.Instance;
-            
+
             // 프리셋 선택 메시지 수신
             WeakReferenceMessenger.Default.Register<PresetSelectedMessage>(this, (r, m) =>
             {
@@ -88,17 +87,17 @@ namespace BrainWaves.ViewModel
                 RightFrequency = m.RightFrequency;
                 LeftGain = m.LeftGain;
                 RightGain = m.RightGain;
-                
+
                 // 자동으로 재생 시작
                 PlaySound();
             });
-            
+
             // 재생 상태 변경 메시지 수신
             WeakReferenceMessenger.Default.Register<PlaybackStateChangedMessage>(this, (r, m) =>
             {
                 UpdatePlayButtonState(m.IsPlaying);
             });
-            
+
             // 오디오 파라미터 변경 메시지 수신  
             WeakReferenceMessenger.Default.Register<AudioParametersChangedMessage>(this, (r, m) =>
             {
@@ -109,10 +108,10 @@ namespace BrainWaves.ViewModel
                 RightGain = m.RightGain;
                 MasterVolume = m.MasterVolume;
             });
-            
+
             // 초기 상태 설정
             UpdatePlayButtonState(_audioService.IsPlaying);
-            
+
             // 현재 재생 중인 값으로 초기화
             if (_audioService.IsPlaying)
             {
@@ -183,7 +182,7 @@ namespace BrainWaves.ViewModel
         {
             _audioService.Stop();
         }
-        
+
         private void UpdatePlayButtonState(bool playing)
         {
             IsPlaying = playing;
