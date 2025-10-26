@@ -167,3 +167,4 @@ dotnet run --project BrainWaves/BrainWaves/BrainWaves.csproj
   <a href="https://github.com/Sia819/BrainWavesWPF/issues">버그 신고</a> •
   <a href="https://github.com/Sia819/BrainWavesWPF/issues">기능 요청</a>
 </p>
+```

@@ -1,4 +1,7 @@
-﻿<Page x:Class="BrainWaves.View.Presets"
+﻿<!--
+수동 주파수 제어 페이지 (남색 그라데이션 헤더, 보라색 주파수 표시)
+-->
+<Page x:Class="BrainWaves.View.Presets"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"

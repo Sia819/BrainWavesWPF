@@ -3,6 +3,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BrainWaves.Model
 {
+    /// <summary>
+    /// 좌/우 주파수, 공명 계산, 파형 유형 분류(감마, 베타, 알파, 세타, 델타)를 포함한 뇌파 프리셋 정의
+    /// </summary>
     public partial class PresetData : ObservableObject
     {
         [ObservableProperty]

@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 
+/**
+싱글톤 패턴으로 구현된 중앙 집중식 오디오 재생 관리자. 동시 재생 방지 및 디바운싱 로직 포함
+*/
 namespace BrainWaves.Services
 {
     public class AudioService : ObservableObject
