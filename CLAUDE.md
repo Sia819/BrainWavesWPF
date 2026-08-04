@@ -7,6 +7,7 @@ Views/         : XAML UI (프레임 네비게이션)
 ViewModels/    : 화면 로직·상태
 Services/      : 오디오 합성·재생
 Converters/    : 값 변환기
+Behaviors/     : 첨부 속성으로 붙이는 UI 동작
 
 
 
@@ -47,6 +48,14 @@ Converters/    : 값 변환기
 ### Converters (`/Converters/`)
 - `BoolToPlayStopTextConverter.cs` - 재생 상태에 따른 텍스트 변환
 
+### Behaviors (`/Behaviors/`)
+- `WindowAutoFit.cs` - 창의 최소 크기와 시작 크기를 콘텐츠가 요구하는 크기에서 도출한다. 창에 `WindowAutoFit.IsEnabled`를 붙이면 페이지를 띄울 때마다 다시 측정한다. 목록처럼 항목 수만큼 길어지는 페이지는 `WindowAutoFit.FitsContent="False"`로 선언해 창이 그 길이를 따라가지 않게 한다.
+
+## 창 크기 정책
+창 크기를 사람이 고른 값으로 두면 폰트, DPI 배율, 요소 추가로 콘텐츠 요구 높이가 바뀔 때 조용히 어긋나 스크롤바가 생긴다. 그래서 `MainWindow`는 높이를 지정하지 않고 `WindowAutoFit`이 측정한 값을 쓴다. 각 페이지의 ScrollViewer는 지우지 않고 안전망으로 남긴다. 콘텐츠 요구가 화면 작업 영역을 넘어 창을 더 키울 수 없을 때 요소가 잘리지 않게 받아내는 역할이다.
+
+새 페이지를 추가할 때는 선언 없이 두면 콘텐츠가 모두 보이도록 창이 맞춰진다. 항목 수에 따라 길어지는 페이지만 `FitsContent="False"`를 붙인다.
+
 ### 핵심 기능
 - `PlaySound.cs` - System.Media.SoundPlayer를 사용하여 각 채널에 다른 사인파 주파수를 가진 스테레오 WAV 오디오 생성
 
@@ -82,6 +91,8 @@ BrainWavesWPF
 │  │  ├─ App.xaml
 │  │  ├─ App.xaml.cs
 │  │  ├─ AssemblyInfo.cs
+│  │  ├─ Behaviors
+│  │  │  └─ WindowAutoFit.cs
 │  │  ├─ BrainWaves.csproj
 │  │  ├─ Converters
 │  │  │  └─ BoolToPlayStopTextConverter.cs
