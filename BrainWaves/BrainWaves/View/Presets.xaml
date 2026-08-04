@@ -8,8 +8,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="clr-namespace:BrainWaves.ViewModel"
-      mc:Ignorable="d" 
+      xmlns:behaviors="clr-namespace:BrainWaves.Behaviors"
+      mc:Ignorable="d"
       d:DesignHeight="1250" d:DesignWidth="450"
+      behaviors:WindowAutoFit.FitsContent="False"
       Title="Presets">
     <Page.DataContext>
         <vm:PresetsViewModel/>
